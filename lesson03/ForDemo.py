@@ -20,3 +20,6 @@ for x in range(1, 2):
     print(x)
 else:
     print('end')
+
+for x in range(1, 2):
+    pass
