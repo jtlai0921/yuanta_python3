@@ -16,5 +16,7 @@ employees = {'Tom':70000, 'Mary':80000, 'John':55000}
 for name in employees:
     print('%s 的薪資 %d' % (name, employees[name]))
 
-for x in range(1, 100):
-    pass
+for x in range(1, 2):
+    print(x)
+else:
+    print('end')
