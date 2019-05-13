@@ -11,3 +11,4 @@ path = r'c:\temp\nba.txt'
 print(path)
 
 print(str1.count('l'))  # 找到有幾個 l
+
