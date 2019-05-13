@@ -21,6 +21,8 @@ def check(iGuess, iMin, iMax):
 # print(iTarget)
 while True:
     iGuess = int(input("{0}~{1} ->" .format(iMin, iMax)))
+    if iGuess <= iMin or iGuess >= iMax:
+        continue
     nResult, iMin, iMax = check(iGuess, iMin, iMax)
     if nResult:
         print("Good")
