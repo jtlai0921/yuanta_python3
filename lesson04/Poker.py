@@ -3,6 +3,7 @@ import random
 list = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'] * 4
 
 player = []
+pc = []
 
 def calc_sum():
     sum = 0.0
@@ -37,3 +38,7 @@ while True:
     if len(player) == 5:
         print('恭喜！過五關')
         break
+
+# 與電腦 PK
+player_sum = 0
+pc_sum = 0
