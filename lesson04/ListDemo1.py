@@ -1,4 +1,5 @@
 import random
+import statistics
 poker = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10'
          , 'J', 'Q']
 # poker = poker + poker
@@ -22,3 +23,7 @@ del poker[0]
 print(poker)
 del poker[poker.index('9')]
 print(poker)
+
+nums = [100, 90, 80]
+print(statistics.mean(nums))
+print(statistics.stdev(nums))
