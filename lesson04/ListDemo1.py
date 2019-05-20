@@ -15,4 +15,10 @@ poker.sort()
 print(poker)
 random.shuffle(poker)
 print(poker)
-
+print('3' in poker)
+print(poker.pop(0))
+print(poker)
+del poker[0]
+print(poker)
+del poker[poker.index('9')]
+print(poker)
