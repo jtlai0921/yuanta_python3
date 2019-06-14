@@ -17,6 +17,13 @@ print(sp.find("span", {"id":"ctl08_labText1"}).text.strip());
 
 rs = sp.find_all("tr", {"align":"center", "style":"border-width:1px;border-style:Solid;"})
 
+print(type(rs))
+# for r in rs:
+#     print(r.text.strip())
+
 for r in rs:
-    print(r.text.strip())
+    name = r.find('a').text.strip()
+    pm25 = r.find_all('span')
+    print("%s %s %s" % (name, pm25[0].text.strip(), pm25[1].text.strip()))
+
 
