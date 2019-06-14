@@ -10,4 +10,18 @@ url = 'https://pixabay.com/zh/photos/?cat=nature'
 html = requests.get(url, headers=headers)
 
 sp = BeautifulSoup(html.text, 'html.parser')
-print(sp)
+rs = sp.find_all("img", src=re.compile("jpg"))
+
+for r in rs:
+    image_path = r.get('src')
+    print(image_path)
+    filename = os.path.basename(image_path)
+    print(filename)
+    # 寫檔
+    folder = 'images'
+    if not os.path.exists(folder):
+        os.makedirs(folder)
+
+    req = Request(url=image_path, headers=headers)
+    file = open(folder + "/" + filename, 'wb')
+    file.write(urlopen(req).read())
