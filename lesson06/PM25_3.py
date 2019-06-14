@@ -21,9 +21,16 @@ print(type(rs))
 # for r in rs:
 #     print(r.text.strip())
 
+# for r in rs:
+#     name = r.find('a').text.strip()
+#     pm25 = r.find_all('span')
+#     print("%s %s %s" % (name, pm25[0].text.strip(), pm25[1].text.strip()))
+
 for r in rs:
     name = r.find('a').text.strip()
     pm25 = r.find_all('span')
-    print("%s %s %s" % (name, pm25[0].text.strip(), pm25[1].text.strip()))
-
+    print(name, end=" ")
+    for p in pm25:
+        print(p.text.strip(), end=" ")
+    print()
 
