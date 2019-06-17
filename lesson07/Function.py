@@ -46,15 +46,42 @@ def make_pretty(func):
         print("戴帽子")
         func()
     return inner
+
 def make_pretty2(func):
     def inner():
         print("紮S腰帶")
         func()
     return inner
+
 @make_pretty
 @make_pretty2
 def soldier():
     print("阿兵哥")
+
 soldier()
 
+
+#Lambda
+
+f = lambda x:x*x - x
+print(f(3))
+
+def calc(x):
+    return x**2
+
+b = lambda x : calc(x)
+print(b(10))
+
+
+max = lambda x, y : x if x>y else y
+print(max(10, 20))
+
+
+#switch lambda
+id = 'A223456789'
+sex = id[1]
+{
+    '1':lambda : print('男'),
+    '2':lambda : print('女'),
+}.get(sex, lambda :print('性別錯誤'))()
 
