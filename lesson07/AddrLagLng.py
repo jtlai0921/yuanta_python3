@@ -7,13 +7,9 @@ headers = {
 }
 
 key = 'AIzaSyC33pWa8pjCkNWuAtLfUx3MxfRG4ye3Zs0'
-origin = '台灣台北市中山區南京東路三段225號'
-destination = '台北火車站'
-url = 'https://maps.googleapis.com/maps/api/directions/json?origin=%s&destination=%s&key=%s' % (origin, destination, key)
+url = 'https://maps.googleapis.com/maps/api/geocode/json?address=台灣台北市中山區南京東路三段225號&key=%s' % key
 html = requests.get(url, headers=headers)
 
 print(html.text)
-
-print(decoder.decode_polyline('s}{wC}~ydV?j@?`A?N?H?HAP?V?f@IxABdB?PMhAA~BAfC?z@EbC?|CAfE'))
 
 
