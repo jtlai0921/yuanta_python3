@@ -15,6 +15,7 @@ class Temperature: # 溫度
         print("__init__")
         self.fahrenheit = initial_f
 
+
 t = Temperature(212)
 print(t.celsius)
 t.celsius = 0
