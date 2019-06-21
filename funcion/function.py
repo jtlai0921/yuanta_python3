@@ -97,4 +97,4 @@ def make_pretty3(func):
 def soldier():
     print("阿兵哥")
 
-#soldier()
+soldier()
