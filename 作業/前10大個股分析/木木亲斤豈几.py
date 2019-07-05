@@ -4,8 +4,10 @@ import tkinter.ttk as ttk
 import tkinter.messagebox
 import requests
 import datetime
+import os
 
 url = "https://www.twse.com.tw/exchangeReport/BWIBBU_d?response=csv&date=%d&selectType=ALL"
+
 
 def findBtnClicked():
     try:
@@ -16,35 +18,72 @@ def findBtnClicked():
     except BaseException as e:
         tkinter.messagebox.showinfo("欄位資料內容錯誤", e)
         return
-    try:
-        req = requests.get(url.format(entry1Value))
-    except BaseException as e:
-        tkinter.messagebox.showinfo("資料載入失敗", e)
-        return
 
-    if req.status_code == 200:
-        lines = req.text.split('\n')
-        skipline = 0
-        for oneline in lines:
-            if skipline < 2:
-                skipline += 1
-                continue
-            elif oneline.strip() == '""':
-                break
-            # print(oneline)
-            fields = tuple(v.replace("\"", "") for v in oneline.split(","))
-            try:
-                if float(fields[2]) >= entry2Value and float(fields[4]) <= entry3Value and float(fields[5]) <= entry4Value:
-                    tree.insert("", "end", values=fields)
-            except BaseException as e:
-                print("%s 資料異常 %s" % (oneline.strip(), e))
-    else:
-        tkinter.messagebox.showinfo("資料載入失敗", "Status Code = %d".format(req.status_code))
+    global lastDataDate
+    global dataLines
+    if entry1Value != lastDataDate:
+        try:
+            cacheFilePath = "BWIBBU_d\\" + str(entry1Value) + ".data"
+            # 是否存在快取檔中
+            if os.path.exists(cacheFilePath):
+                file = open(cacheFilePath, "r", encoding="utf-8")
+                dataLines = file.readlines()
+                print("載入快取檔" + cacheFilePath + "，資料行數" + str(len(dataLines)))
+            else:
+                print("url=" + (url % entry1Value))
+                req = requests.get(url % entry1Value)
+                if req.status_code == 200:
+                    dataLines = req.text.split('\n')
+                    if len(dataLines) < 10:
+                        raise Exception("無 " + str(entry1Value) + " 資料")
+                    lastDataDate = entry1Value
+                    print("載入遠端資料，資料行數" + str(len(dataLines)))
+
+                    # 寫入快取
+                    try:
+                        file = open(cacheFilePath, "w", encoding="utf-8")
+                        file.writelines(dataLines)
+                        print("已寫入快取" + cacheFilePath)
+                    except BaseException as e:
+                        os.remove(cacheFilePath)
+                        print("快取檔寫入失敗，" + e)
+                else:
+                    tkinter.messagebox.showinfo("資料載入失敗", "Status Code = %d".format(req.status_code))
+                    return
+        except BaseException as e:
+            tkinter.messagebox.showinfo("資料載入失敗", e)
+            return
+
+    for p in tree.get_children():
+        tree.delete(p)
+    skipline = 0
+    for oneline in dataLines:
+        if skipline < 2:
+            if skipline == 0:
+                oneline = oneline.replace("\"", "")
+                win.title("前10大個股日本益比、殖利率及股價淨值比(" + oneline.split(" ")[0] + ")")
+            skipline += 1
+            continue
+        elif oneline.strip() == '""':
+            break
+        # print(oneline)
+        fields = tuple(v.replace("\"", "") for v in oneline.split(","))
+        try:
+            if float(fields[2]) >= entry2Value and float(fields[4]) <= entry3Value and float(fields[5]) <= entry4Value:
+                tree.insert("", "end", values=fields)
+        except BaseException as e:
+            print("%s 資料異常 %s" % (oneline.strip(), e))
 
 
 def closeBtnClicked():
     win.quit()
 
+
+lastDataDate = None
+dataLines = None
+
+if not os.path.exists("BWIBBU_d"):
+    os.makedirs("BWIBBU_d")
 
 win = tkinter.Tk()
 win.title("前10大個股日本益比、殖利率及股價淨值比")
@@ -83,7 +122,7 @@ label4.grid(row=3, column=0, pady=(5, 0))
 
 entry4 = tkinter.Entry(panel1, justify=tkinter.CENTER)
 entry4.grid(row=3, column=1, pady=(5, 0))
-entry4.insert(0, "5.0")
+entry4.insert(0, "1.0")
 
 findBtn = tkinter.Button(panel1, text="查找", command=findBtnClicked)
 findBtn.grid(row=4, column=0, pady=(5, 5))
