@@ -79,8 +79,35 @@ def closeBtnClicked():
     win.quit()
 
 
+def sort_column(tv, col):
+    sortAsc = heading[col]["sortAsc"]
+    # print(tv, col, sortAsc)
+    sortAsc = not sortAsc
+    heading[col]["sortAsc"] = sortAsc
+
+    for key in heading.keys():
+        tv.heading(key, text=heading[key]["Name"] + (("▲" if sortAsc else "▼") if key == col else ""))
+
+    l = [(tv.set(k, col), k) for k in tv.get_children('')]
+    if col == "2" or col == "7":
+        l.sort(key=lambda t: t[0], reverse=not sortAsc)
+    else:
+        l.sort(key=lambda t: float(t[0]), reverse=not sortAsc)
+    #      ^^^^^^^^^^^^^^^^^^^^^^^
+    for index, (val, k) in enumerate(l):
+        tv.move(k, '', index)
+
+
 lastDataDate = None
 dataLines = None
+heading = {"1" : {"Name" : "證券代號", "sortAsc" : True},
+    "2" : {"Name" : "證券名稱", "sortAsc" : True},
+    "3" : {"Name" : "殖利率(%)", "sortAsc" : True},
+    "4" : {"Name" : "股利年度", "sortAsc" : True},
+    "5" : {"Name" : "本益比", "sortAsc" : True},
+    "6" : {"Name" : "股價淨值比", "sortAsc" : True},
+    "7" : {"Name" : "財報年/季", "sortAsc" : True}}
+
 
 if not os.path.exists("BWIBBU_d"):
     os.makedirs("BWIBBU_d")
@@ -134,21 +161,10 @@ panel2 = tkinter.Frame(win, relief="sunken", borderwidth=3)
 panel2.pack(fill=tkinter.BOTH, expand=True)
 panel2.pack_propagate(False)
 
-tree = ttk.Treeview(panel2, columns=["1", "2", "3", "4", "5", "6", "7"], show="headings")
-tree.column("1", width=100, anchor="center")
-tree.column("2", width=100, anchor="center")
-tree.column("3", width=100, anchor="center")
-tree.column("4", width=100, anchor="center")
-tree.column("5", width=100, anchor="center")
-tree.column("6", width=100, anchor="center")
-tree.column("7", width=100, anchor="center")
-tree.heading("1", text="證券代號")
-tree.heading("2", text="證券名稱")
-tree.heading("3", text="殖利率(%)")
-tree.heading("4", text="股利年度")
-tree.heading("5", text="本益比")
-tree.heading("6", text="股價淨值比")
-tree.heading("7", text="財報年/季")
+tree = ttk.Treeview(panel2, columns=tuple(key for key in heading.keys()), show="headings")
+for key in heading.keys():
+    tree.column(key, width=100, anchor="center")
+    tree.heading(key, text=heading[key]["Name"], command=lambda v=key: sort_column(tree, v))
 
 tree.pack(fill=tkinter.BOTH, expand=True)
 tree.pack_propagate(False)
