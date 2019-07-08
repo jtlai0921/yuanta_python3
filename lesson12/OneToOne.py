@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
-import datetime
-import hashlib
-from sqlalchemy import create_engine, DateTime, Column, Integer, String, func, text, ForeignKey
+from sqlalchemy import create_engine, Column, Integer, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, relationship, backref
+from sqlalchemy.orm import sessionmaker, relationship
 
 # 用來映對 Python 類別與資料庫表格之間的關聯
 Base = declarative_base()
@@ -12,7 +10,7 @@ class Parent(Base):
     __tablename__ = 'parent'
     id = Column(Integer, primary_key=True)
     # 在父類別中透過 relationship() 方法來引用子表的類別集合
-    children = relationship("Child")
+    child = relationship("Child", uselist=False)
     def __str__(self):
         return "Parent('{}')".format(
             self.id
@@ -23,7 +21,7 @@ class Child(Base):
     id = Column(Integer, primary_key=True)
     # 在子表類別中透過 foreign key (外键)引用父表類別的参考欄位變數
     parent_id = Column(Integer, ForeignKey('parent.id'))
-    parent = relationship("Parent")
+    parent = relationship("Parent", uselist=False)
     def __str__(self):
         return "Child('{}')".format(
             self.id
@@ -40,28 +38,16 @@ if __name__ == '__main__':
     ''' 4.將這個已經與 engine 綁定的 Session 類別實例化，以開始進行與資料庫的互動'''
     session = Session()
 
-    # c1 = Child()
-    # c2 = Child()
-    # c3 = Child()
-    # c4 = Child()
-    # session.add(c1)
-    # session.add(c2)
-    # session.add(c3)
-    # session.add(c4)
-    #
-    # p1 = Parent()
-    # p2 = Parent()
-    # p1.children = [c1, c3, c4]
-    # p2.children = [c2]
-    #
-    # session.add(p1)
-    # session.add(p2)
+    c1 = Child()
+    c2 = Child()
+    c1.parent = Parent()
+    c2.parent = Parent()
+
+    session.add(c1)
+    session.add(c2)
 
     for p in session.query(Parent):
-        print(p, end=':')
-        for c in p.children:
-           print(c, end=' ')
-        print()
+        print(p, ":", p.child)
 
     for c in session.query(Child):
         print(c, ":", c.parent)
