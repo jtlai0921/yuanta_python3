@@ -30,6 +30,7 @@ class Child(Base):
     parents = relationship(
         "Parent",
         secondary=ref_table)
+
     def __str__(self):
         return "Child('{}')".format(
             self.id
