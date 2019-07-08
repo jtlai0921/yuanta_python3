@@ -5,7 +5,7 @@ if __name__ == '__main__':
 
     user1 = User('user1')
     user2 = User('user2')
-
+    
     session.add(user1)
     session.add(user2)
 
