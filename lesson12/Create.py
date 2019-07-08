@@ -1,9 +1,3 @@
-import datetime
-
-from sqlalchemy import create_engine, Column, Integer, ForeignKey, String, DateTime
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, relationship
-
 from lesson12.Dao import getSession, User
 
 if __name__ == '__main__':
