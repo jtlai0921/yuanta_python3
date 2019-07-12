@@ -12,7 +12,10 @@ class Worker(threading.Thread):
         while self.queue.qsize() > 0:
             job = self.queue.get()
             print('Worker %d: %s' % (self.num, job))
-            time.sleep(1)
+            if (self.num == 1):
+                time.sleep(1)
+            else:
+                time.sleep(0.3)
 
 
 my_queue = queue.Queue()
