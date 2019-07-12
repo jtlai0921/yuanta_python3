@@ -19,3 +19,8 @@ r1.name = '烏龜'
 r2.name = '兔子'
 r1.start()
 r2.start()
+
+r1.join()
+r2.join()
+
+print('Game over !')
