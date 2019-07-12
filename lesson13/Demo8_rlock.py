@@ -22,7 +22,6 @@ def do_something1():
 def do_something2():
     print('do_something2')
 
-
 threading.Thread( target=f ).start()
 threading.Thread( target=f ).start()
 threading.Thread( target=f ).start()
