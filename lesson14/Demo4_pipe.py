@@ -17,11 +17,8 @@ def job():
     p.join()
 
 if __name__ == '__main__':
+    t = threading.Thread(target=job)
+    t.start()
     print('Wait...')
-    job()
+    t.join()
     print('Done.')
-    # t = threading.Thread(target=job)
-    # t.start()
-    # print('Wait...')
-    # t.join()
-    # print('Done.')
