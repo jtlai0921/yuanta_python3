@@ -148,6 +148,6 @@ if __name__ == "__main__":
     app=MyApp()
     frame = wx.Frame(None,wx.ID_ANY, "Hello")
     frame.Show (False)
-    Bot = StockBot(frame.Handle,'N125044233','1234567')
+    Bot = StockBot(frame.Handle,'A123456789','1234567')
     Job(Job.STOCK_LOGIN)
     app.MainLoop (run_job)
