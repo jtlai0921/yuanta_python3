@@ -16,6 +16,11 @@ def update():
     url = 'https://sheetdb.io/api/v1/pn0tjkupilpqk/name/Scott'
     res = requests.patch(url=url, data=data, headers=headers)
 
+def delete():
+    url = 'https://sheetdb.io/api/v1/pn0tjkupilpqk/name/Scott'
+    res = requests.delete(url=url, headers=headers)
+
 #add()
-update()
+#update()
+delete()
 read()
