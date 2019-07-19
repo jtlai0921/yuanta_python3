@@ -13,7 +13,7 @@ def add(d, t, ai_index, color):
     # https://sheetdb.io/api/v1/ 這是 url
     # rk7bud9tvo80v 這是 key 值 (用來決定是哪一個 excel 表，每一個 excel 都有一個 key 值)
     # sheet=tx_index 這是 excel 表的 sheet tab
-    url = 'https://sheetdb.io/api/v1/rk7bud9tvo80v/?sheet=tx_index'
+    url = 'https://sheetdb.io/api/v1/d9tvo80v/?sheet=tx_index'
     # 存入預測指數 date, time, ai_index, red (此時 開高低收應該都是空白)
     data = '{"data":[{ "date": "%s", "time": "%s", "open":"", "high":"", "low":"", "close":"", "ai_index":%d, "color":"%s" }]}' % (d, t, ai_index, color)
     r = requests.post(url=url,data=data,headers=headers)
@@ -22,7 +22,7 @@ def add(d, t, ai_index, color):
 
 # 修改 ai_index
 def patch_ai_index(t, ai_index, color):
-    url = 'https://sheetdb.io/api/v1/rk7bud9tvo80v/time/%s/?sheet=tx_index' % t
+    url = 'https://sheetdb.io/api/v1/ud9tvo80v/time/%s/?sheet=tx_index' % t
     data = '{"data":[{"ai_index":%d, "color":"%s"}]}' % (ai_index, color)
     r = requests.patch(url=url,data=data,headers=headers)
     print(r)
@@ -33,7 +33,7 @@ def patch_ohlc(t, open, high, low, close):
     # 存入開高低收
     # PUT https://sheetdb.io/api/v1/58f61be4dda40/{column}/{value}
     # 注意：{column}/{value} -> time/08:45:00-08:45:59 是根據 time 內容來指定修改的那一行
-    url = 'https://sheetdb.io/api/v1/rk7bud9tvo80v/time/%s/?sheet=tx_index' % t
+    url = 'https://sheetdb.io/api/v1/ud9tvo80v/time/%s/?sheet=tx_index' % t
     data = '{"data":[{"open":%d, "high":%d, "low":%d, "close":%d}]}' % (open, high, low, close)
     r = requests.patch(url=url,data=data,headers=headers)
     print(r)
@@ -42,7 +42,7 @@ def patch_ohlc(t, open, high, low, close):
 # 刪除
 def delete(t):
     # 刪除
-    url = 'https://sheetdb.io/api/v1/rk7bud9tvo80v/time/%s/?sheet=tx_index' % t
+    url = 'https://sheetdb.io/api/v1/rk7buo80v/time/%s/?sheet=tx_index' % t
     r = requests.delete(url=url, headers=headers)
     print(r)
 
