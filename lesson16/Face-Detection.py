@@ -4,6 +4,8 @@ import cv2
 print(cv2.__version__)
 # 人臉偵測器
 face_cascade = cv2.CascadeClassifier('./xml/haarcascade_frontalface_alt.xml')
+# 眼睛偵測
+eye_cascade  = cv2.CascadeClassifier('./xml/haarcascade_eye.xml')
 
 # 設定攝像鏡頭
 cap = cv2.VideoCapture(0)
@@ -32,6 +34,19 @@ while True:
                                        # CASCADE_FIND_BIGGEST_OBJECT=4 -> 只檢測最大的物體
                                        # CASCADE_DO_ROUGH_SEARCH=8 粗略的檢測
     )
+    # 在臉部周圍畫矩形框
+    for (x, y, w, h) in faces:
+        cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 5)  # 注意：(0, 255, 0) 是 BGR
+        # 繪文字
+        cv2.putText(frame, 'Vincent', (x, y - 7), 2, 1.2, (0, 255, 0), 2)
+
+        # 獲取該人臉矩形框的感興趣區域 ROI(region of interest), 淺複製(子圖像區域)
+        roi_gray = gray[y:y + h, x:x + w]
+        roi_color = frame[y:y + h, x:x + w]
+
+        eyes = eye_cascade.detectMultiScale(roi_gray)
+        for (ex, ey, ew, eh) in eyes:
+            cv2.rectangle(roi_color, (ex, ey), (ex + ew, ey + eh), (0, 0, 255), 2)
 
     # 將 frame 顯示
     cv2.imshow('Video', frame)
