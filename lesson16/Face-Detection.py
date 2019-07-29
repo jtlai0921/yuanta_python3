@@ -58,7 +58,7 @@ while True:
             minSize=(30, 30),
             flags=cv2.CASCADE_SCALE_IMAGE
         )
-        # 框出上揚嘴角，並打上 Smile 標籤
+        # 框出上揚嘴角
         for (sx, sy, sw, sh) in smile:
             cv2.rectangle(roi_color, (sx, sy), (sx + sw, sy + sh), (255, 0, 0), 2)
 
