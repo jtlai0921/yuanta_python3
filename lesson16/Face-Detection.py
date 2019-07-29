@@ -5,7 +5,9 @@ print(cv2.__version__)
 # 人臉偵測器
 face_cascade = cv2.CascadeClassifier('./xml/haarcascade_frontalface_alt.xml')
 # 眼睛偵測
-eye_cascade  = cv2.CascadeClassifier('./xml/haarcascade_eye.xml')
+eye_cascade = cv2.CascadeClassifier('./xml/haarcascade_eye.xml')
+# 微笑偵測
+smile_cascade = cv2.CascadeClassifier('./xml/haarcascade_smile.xml')
 
 # 設定攝像鏡頭
 cap = cv2.VideoCapture(0)
@@ -47,6 +49,18 @@ while True:
         eyes = eye_cascade.detectMultiScale(roi_gray)
         for (ex, ey, ew, eh) in eyes:
             cv2.rectangle(roi_color, (ex, ey), (ex + ew, ey + eh), (0, 0, 255), 2)
+
+        # 對人臉進行微笑偵測
+        smile = smile_cascade.detectMultiScale(
+            roi_gray,
+            scaleFactor=1.1,
+            minNeighbors=100,
+            minSize=(30, 30),
+            flags=cv2.CASCADE_SCALE_IMAGE
+        )
+        # 框出上揚嘴角，並打上 Smile 標籤
+        for (sx, sy, sw, sh) in smile:
+            cv2.rectangle(roi_color, (sx, sy), (sx + sw, sy + sh), (255, 0, 0), 2)
 
     # 將 frame 顯示
     cv2.imshow('Video', frame)
