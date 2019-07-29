@@ -40,6 +40,6 @@ for (x, y, w, h) in faces:
 
 cv2.imshow('Smile?', img)
 # 儲存檔案
-#cv2.imwrite("./image/smile.jpg",img)
+cv2.imwrite("./image/smile.jpg",img)
 # 任意鍵離開(若設定為 0 就表示持續等待至使用者按下按鍵為止)
 c = cv2.waitKey(0)
