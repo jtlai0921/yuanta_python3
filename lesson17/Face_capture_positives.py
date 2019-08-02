@@ -2,7 +2,7 @@
 import glob
 import os
 import cv2
-from opencv_faceid import Config
+from lesson17 import Config
 
 
 # 載入 Config.HAAR_FACES 指定的層疊分類器

@@ -3,7 +3,7 @@ import fnmatch
 import os
 import cv2
 import numpy as np
-from opencv_faceid import Config
+from lesson17 import Config
 
 
 # 定義 walk_files 函式，
