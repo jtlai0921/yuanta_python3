@@ -79,7 +79,7 @@ if __name__ == '__main__':
 
         # 7.判斷評估值 <= Config.POSITIVE_THRESHOLD
         if label[1] <= Config.POSITIVE_THRESHOLD:
-            # 印出辨識成功
+            # 印出 辨識成功
             print('辨識成功 opencv_faceid!')
             # 在臉部周圍畫矩形框
             for (x, y, w, h) in faces:
