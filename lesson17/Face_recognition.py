@@ -63,7 +63,10 @@ if __name__ == '__main__':
         print(label)
 
         # 7.判斷評估值 <= Config.POSITIVE_THRESHOLD
-
+        if label[1] <= Config.POSITIVE_THRESHOLD:
+            # 印出辨識成功
+            print('辨識成功 opencv_faceid!')
+            break;
 
         # 結束辨識程序...end
 
