@@ -76,6 +76,9 @@ if __name__ == '__main__':
             # CASCADE_DO_ROUGH_SEARCH=8 粗略的檢測
         )
 
+        if(len(faces) != 1):
+            continue
+
         # 在臉部周圍畫矩形框
         for (x, y, w, h) in faces:
             cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 5)  # 注意：(0, 255, 0) 是 BGR
