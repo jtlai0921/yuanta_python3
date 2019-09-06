@@ -27,6 +27,12 @@ def patch_ai_index(t, ai_index, color):
     r = requests.patch(url=url,data=data,headers=headers)
     print(r)
 
+# 修改 ai_index 與 開高低收
+def patch_ai_index_and_ohlc(t, open, high, low, close, ai_index, color):
+    url = 'https://sheetdb.io/api/v1/ud9tvo80v/time/%s/?sheet=tx_index' % t
+    data = '{"data":[{"open":%d, "high":%d, "low":%d, "close":%d, "ai_index":%d, "color":"%s"}]}' % (open, high, low, close, ai_index, color)
+    r = requests.patch(url=url,data=data,headers=headers)
+    print(r)
 
 # 修改開高低收
 def patch_ohlc(t, open, high, low, close):

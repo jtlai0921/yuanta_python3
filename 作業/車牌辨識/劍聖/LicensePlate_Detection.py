@@ -1,7 +1,7 @@
 # -*- coding=utf-8 -*-
 import cv2
 
-carPath = "./xml/us.xml"
+carPath = "./xml/tw.xml"
 carCascade = cv2.CascadeClassifier(carPath)
 
 # smilePath = "./xml/haarcascade_smile.xml"
